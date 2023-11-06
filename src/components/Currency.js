@@ -6,16 +6,14 @@ const Currency = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const setCurrencyHandler = (currency) => {
+  const setCurrency = (currency) => {
     dispatch({
       type: "CHG_CURRENCY",
       payload: currency,
     });
   };
 
-  //  '£' '€' '$' '₹'
-
-  const currencyLabel = () => {
+  const currencySelected = () => {
     switch (currency) {
       case "$":
         return "$ Dollar";
@@ -42,15 +40,22 @@ const Currency = () => {
         onClick={() => setIsOpen(!isOpen)}
       >
         Currency {"("}
-        {currencyLabel()}
+        {currencySelected()}
         {")"}
       </button>
-      <ul className={`custom-menu dropdown-menu ${isOpen ? "show" : ""} `}>
+      <ul
+        className={`custom-menu dropdown-menu ${isOpen ? "show" : ""} `}
+        style={{
+          backgroundColor: "#93e399",
+          color: "#fff",
+          border: "solid 1px #000",
+        }}
+      >
         <li>
           <button
             className="dropdown-item"
             type="button"
-            onClick={() => setCurrencyHandler("$")}
+            onClick={() => setCurrency("$")}
           >
             $ Dollar
           </button>
@@ -59,7 +64,7 @@ const Currency = () => {
           <button
             className="dropdown-item"
             type="button"
-            onClick={() => setCurrencyHandler("£")}
+            onClick={() => setCurrency("£")}
           >
             £ Pound
           </button>
@@ -68,7 +73,7 @@ const Currency = () => {
           <button
             className="dropdown-item"
             type="button"
-            onClick={() => setCurrencyHandler("€")}
+            onClick={() => setCurrency("€")}
           >
             € Euro
           </button>
@@ -77,7 +82,7 @@ const Currency = () => {
           <button
             className="dropdown-item"
             type="button"
-            onClick={() => setCurrencyHandler("₹")}
+            onClick={() => setCurrency("₹")}
           >
             ₹ Rupee
           </button>

@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import ExpenseTotal from "./ExpenseTotal";
 
 const BUDGET_MAX_VALUE = 20000;
 
 const Budget = () => {
-  const { budget, remaining, currency, dispatch } = useContext(AppContext);
+  const { budget, expenses, currency, dispatch } = useContext(AppContext);
+  const totalExpenses = expenses.reduce((total, item) => {
+    return (total += item.cost);
+  }, 0);
   const [newBudget, setNewBudget] = useState(budget);
   const handleBudgetChange = (event) => {
     setNewBudget(event.value);
-
     const enteredValue = Number(event.target.value);
 
     // check if the entered value is a number
@@ -24,11 +25,11 @@ const Budget = () => {
       return;
     }
 
-    if (remaining < 0) {
+    if (totalExpenses > enteredValue) {
       alert(
         "You cannot reduce the budget value lower than the spending " +
           currency +
-          ExpenseTotal.totalExpenses
+          totalExpenses
       );
     } else {
       if (enteredValue > BUDGET_MAX_VALUE) {
